@@ -1,0 +1,26 @@
+
+
+<div >
+    
+    <div class="action-dialog__content">
+        <h4 class="action-dialog__content-text mb-4" >{{data.text}}</h4>
+
+        <div class="action-dialog__input-wrapper" [formGroup]="addTask">
+            <input class="action-dialog__input" type="text" formControlName="task">
+            <ng-container *ngIf="task?.touched">
+                <p class="error-msg" *ngIf="task?.errors?.['required']">
+                    Please enter task details
+                </p>
+                <p class="error-msg" *ngIf="task?.errors?.['minlength']">
+                    Please enter min 3 characters
+                </p>
+            </ng-container>
+        </div>
+
+
+        <div class="action-dialog__action ">
+            <button class="action-dialog__action-btn primary me-2" (click)="dialogAction($event,true)">Submit</button>
+            <button class="action-dialog__action-btn secondary" (click)="dialogAction($event,false)">cancel</button>
+        </div>
+    </div>
+</div>

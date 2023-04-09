@@ -1,27 +1,33 @@
-# TodoList
+This project was built using Angular 14 and Node.js 16.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.7.
+Prerequisites
+===================
+Before you begin, make sure you have the following installed on your system:
 
-## Development server
+Node.js
+Angular CLI
+JSON Server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Getting Started
+=====================
+1) Clone this repository to your local machine:
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+2)Navigate to the project directory and install the dependencies using "npm i"
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+3)Start the JSON Server: "json-server --watch db.json".  server url " http://localhost:3000/details"
 
-## Running end-to-end tests
+4)Start the Angular development server: "ng serve"
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+5)Open a web browser and navigate to http://localhost:4200 to access the application.
 
-## Further help
+EXPECTED OUTPUT
+=====================
+https://www.awesomescreenshot.com/video/16360666?key=3c2b119394c6163a5767dfbbec4a89de
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+Thank you :)
+

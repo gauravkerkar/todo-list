@@ -1,0 +1,61 @@
+<div class="page-loader text-center" *ngIf="loading;else showData ">
+    <mat-progress-spinner
+    class="mx-auto"
+    [mode]="'indeterminate'"
+    [value]="50">
+</mat-progress-spinner>
+<p class="mt-2">Loading...</p>
+</div>
+
+
+
+<ng-template #showData>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <p class="secondary-color font-16">All Task</p>
+        <button class="primary-btn" (click)="createTask($event)">Add task</button>
+    </div>
+    
+    <!-- =====#DETAILS TABLE===== -->
+<div class="table-responsive custom-scrollbar"  *ngIf="taskList.length != 0;else noData">
+    <table  class="table table-bordered primary-table">
+        <thead>
+            <tr>
+                <th width="50">
+      
+                </th>
+                <th>
+                    Task
+                </th>
+                <th width="80" class="text-end">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody  >
+            <tr *ngFor="let task of taskList; let idx=index">
+                <td>
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(task?.id) : null"
+                        [checked]="selection.isSelected(task.id)">
+                    </mat-checkbox>
+                </td>
+                <td >{{task?.task}}</td>
+                <td class="text-end">
+                    <button class="action-btn me-2" (click)="editDialog(task?.id,task?.task)">
+                        <img src="/assets/image/icons/edit.svg" alt="edit">
+                    </button>
+                    <button class="action-btn" (click)="deleteDialog(task?.id)">
+                        <img src="/assets/image/icons/delete.svg" alt="delete">
+                    </button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+</ng-template>
+
+<ng-template #noData> 
+    <div class="nodata">
+<p>NO DATA FOUND..</p>
+</div> 
+</ng-template>
