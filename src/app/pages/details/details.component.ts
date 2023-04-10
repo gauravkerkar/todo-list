@@ -33,6 +33,7 @@ export class DetailsComponent implements OnInit {
   }
 
   getData() {
+    this.loading = true
     this.service.getDetails().subscribe({
       next: (value) => {
         console.log("task data", value);
@@ -59,28 +60,34 @@ export class DetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
+
       if (result) {
         console.log("result", result);
 
         //# MAKE A API CALL TO ADD ITEM IN TASk LIST
-
-        //#updated 'details' as i don't have any api
-        this.taskList.push({
-          id: this.taskList.length+1,
+        this.service.addTask({
           task: result
-        })
+        }).subscribe(
+          {
+            next: (result) => {
+              this.getData()
+              this._snackBar.openFromComponent(SnackbarComponent, {
+                duration: 1000,
+                panelClass: 'action-snackbar',
+                horizontalPosition: right,
+                verticalPosition: bottom,
+                data: {
+                  text: 'Task added Successfully'
+                }
 
-        this._snackBar.openFromComponent(SnackbarComponent, {
-          duration: 1000,
-          panelClass: 'action-snackbar',
-          horizontalPosition: right,
-          verticalPosition: bottom,
-          data:{
-            text:'Task added Successfully'
+              });
+            },
+            error: (error) => {
+              console.log("error while creating new task:", error);
+
+            }
           }
-
-        });
+        )
 
       }
     });
@@ -98,23 +105,31 @@ export class DetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //#MAKE A REQUEST TO DELETE ITEM BASED ON UNIQUE ID AND 
-        this.taskList.splice(this.taskList.findIndex((item: any) => item.id === id), 1);
-        this._snackBar.openFromComponent(SnackbarComponent, {
-          duration: 1000,
-          panelClass: 'action-snackbar',
-          horizontalPosition: right,
-          verticalPosition: bottom,
-          data:{
-            text:'Task Deleted Successfully'
+        this.service.deleteTask(id).subscribe({
+          next: (result) => {
+            this.getData()
+            this._snackBar.openFromComponent(SnackbarComponent, {
+              duration: 1000,
+              panelClass: 'action-snackbar',
+              horizontalPosition: right,
+              verticalPosition: bottom,
+              data: {
+                text: 'Task Deleted Successfully'
+              }
+            })
+          },
+          error: (error) => {
+            console.log("error while deleting task:", error);
           }
         });
+
 
       }
     });
   }
 
   //#EDIT CONFIRMATION
-  editDialog(id: number, value:string) {
+  editDialog(id: number, value: string) {
     const dialogRef = this.dialog.open(InputDialogComponent, {
       panelClass: 'action-dialog',
       width: '300px',
@@ -124,30 +139,28 @@ export class DetailsComponent implements OnInit {
       }
     });
 
-        
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log("result", result);
 
         //# MAKE A API CALL TO EDIT ITEM IN TASK LIST
-
-        //#updated 'details' as i don't have any api
-      
-        
-let itemIndex= this.taskList.findIndex((item: any) => item.id === id);
-
-this.taskList[itemIndex].task = result
-
-        this._snackBar.openFromComponent(SnackbarComponent, {
-          duration: 1000,
-          panelClass: 'action-snackbar',
-          horizontalPosition: right,
-          verticalPosition: bottom,
-          data:{
-            text:'Task Edited Successfully'
+        this.service.editTask(id, { task: result }).subscribe({
+          next: (value) => {
+            this.getData()
+            this._snackBar.openFromComponent(SnackbarComponent, {
+              duration: 1000,
+              panelClass: 'action-snackbar',
+              horizontalPosition: right,
+              verticalPosition: bottom,
+              data: {
+                text: 'Task Edited Successfully'
+              }
+            });
+          },
+          error: (error) => {
+            console.log("error while deleting task:", error);
           }
-        });
+        })
 
       }
     });
