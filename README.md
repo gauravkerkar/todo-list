@@ -13,7 +13,7 @@ JSON Server
 Getting Started
 =====================
 1) Clone this repository to your local machine:
-
+https://github.com/gauravkerkar/todo-list
 
 
 2)Navigate to the project directory and install the dependencies using "npm i"
